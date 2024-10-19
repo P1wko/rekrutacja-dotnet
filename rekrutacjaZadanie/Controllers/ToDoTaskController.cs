@@ -46,5 +46,70 @@ namespace rekrutacjaZadanie.Controllers
 			}
 			return Ok(incomingTasks);
 		}
+
+		[HttpPost]
+		public async Task<ActionResult<ToDoTask>> CreateTask(ToDoTask task)
+		{
+			_context.ToDoTasks.Add(task);
+			await _context.SaveChangesAsync();
+			return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
+		}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateTask(int id, ToDoTask task)
+		{
+			if (id != task.Id)
+			{
+				return BadRequest();
+			}
+
+			_context.Entry(task).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return NoContent();
+		}
+
+		[HttpPatch("{id}")]
+		public async Task<IActionResult> SetPercComplete(int id, [FromBody] int perc)
+		{
+			var task = await _context.ToDoTasks.FindAsync(id);
+			if (task == null)
+			{
+				return NotFound();
+			}
+
+			task.PercComplete = perc;
+
+			await _context.SaveChangesAsync();
+			return Ok(task);
+		}
+
+		[HttpPatch("{id}/complete")]
+		public async Task<IActionResult> SetTaskAsCompleted(int id)
+		{
+			var task = await _context.ToDoTasks.FindAsync(id);
+			if (task == null)
+			{
+				return NotFound();
+			}
+
+			task.PercComplete = 100;
+
+			await _context.SaveChangesAsync();
+			return Ok(task);
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteTaskById(int id)
+		{
+			var task = await _context.ToDoTasks.FindAsync(id);
+			if (task == null)
+			{
+				return NotFound();
+			}
+
+			_context.ToDoTasks.Remove(task);
+			await _context.SaveChangesAsync();
+			return NoContent();
+		}
 	}
 }
