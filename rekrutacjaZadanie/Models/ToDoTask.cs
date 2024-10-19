@@ -7,6 +7,5 @@
 		public string Description { get; set; } = string.Empty;
 		public int PercComplete { get; set; } = 0;
 		public DateTime DateOfExpiry { get; set; }
-
 	}
 }
