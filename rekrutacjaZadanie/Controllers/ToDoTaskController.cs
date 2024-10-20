@@ -16,14 +16,14 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<ToDoTask>>> GetAllTasks()
+		public async Task<ActionResult<IEnumerable<ToDoTask>>> GetAllTasks()		//Get all tasks
 		{
 			var items = await _context.ToDoTasks.ToListAsync();
 			return Ok(items);
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<ToDoTask>> GetTaskById(int id)
+		public async Task<ActionResult<ToDoTask>> GetTaskById(int id)				//Get one task by Id
 		{
 			var task = await _context.ToDoTasks.FindAsync(id);
 			if (task == null)
@@ -34,7 +34,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpGet("incoming")]
-		public async Task<ActionResult<IEnumerable<ToDoTask>>> GetIncomingTasks()
+		public async Task<ActionResult<IEnumerable<ToDoTask>>> GetIncomingTasks()	//Get tasks with date closer than one week
 		{
 			var now = DateTime.Now;
 
@@ -48,7 +48,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<ToDoTask>> CreateTask([FromBody]ToDoTask task)
+		public async Task<ActionResult<ToDoTask>> CreateTask([FromBody]ToDoTask task)	//Create new task
 		{
 			if (!ModelState.IsValid)
 			{
@@ -60,7 +60,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateTask(int id, ToDoTask task)
+		public async Task<IActionResult> UpdateTask(int id, ToDoTask task)				//Update task at the specific ID
 		{
 			if (id != task.Id)
 			{
@@ -78,7 +78,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpPatch("{id}")]
-		public async Task<IActionResult> SetPercComplete(int id, [FromBody] int perc)
+		public async Task<IActionResult> SetPercComplete(int id, [FromBody] int perc)	//Set new % complete for task at specific ID
 		{
 			var task = await _context.ToDoTasks.FindAsync(id);
 			if (task == null)
@@ -98,7 +98,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpPatch("{id}/complete")]
-		public async Task<IActionResult> SetTaskAsCompleted(int id)
+		public async Task<IActionResult> SetTaskAsCompleted(int id)			//Mark task with specific ID as completed by setting % complete on 100
 		{
 			var task = await _context.ToDoTasks.FindAsync(id);
 			if (task == null)
@@ -113,7 +113,7 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteTaskById(int id)
+		public async Task<IActionResult> DeleteTaskById(int id)				//Delete task at specific ID
 		{
 			var task = await _context.ToDoTasks.FindAsync(id);
 			if (task == null)

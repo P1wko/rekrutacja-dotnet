@@ -2,7 +2,7 @@
 
 namespace rekrutacjaZadanie.Models
 {
-	public class ToDoTask
+	public class ToDoTask				//basic ToDoTask object with validation
 	{
 		public int Id { get; set; }
 		[Required(ErrorMessage = "Title is required")]

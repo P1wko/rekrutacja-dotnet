@@ -7,6 +7,6 @@ namespace rekrutacjaZadanie
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-		public DbSet<ToDoTask> ToDoTasks { get; set; }
+		public DbSet<ToDoTask> ToDoTasks { get; set; }		//Setting a table in database
 	}
 }

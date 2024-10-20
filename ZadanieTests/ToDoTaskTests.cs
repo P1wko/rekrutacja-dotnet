@@ -19,7 +19,7 @@ namespace ZadanieTests
 		}
 
 		[Fact]
-		public async Task AddTask_ShouldAddTaskToDatabase()
+		public async Task AddTask_ShouldAddTaskToDatabase()				//Test adding new task to database
 		{
 			var task = new ToDoTask { Title = "Test" };
 
@@ -30,10 +30,8 @@ namespace ZadanieTests
 			Assert.Equal("Test", savedTask.Title);
 		}
 
-
-
 		[Fact]
-		public void AddTask_WithInvalidTitle_ShouldFailValidation()
+		public void AddTask_WithInvalidTitle_ShouldFailValidation()		//Test validation for Title propertie in ToDoTask object
 		{
 			var task = new ToDoTask { Title = "" };
 
@@ -49,7 +47,7 @@ namespace ZadanieTests
 		}
 
 		[Fact]
-		public void AddTask_WithInvalidPercComplete_ShouldFailValidation()
+		public void AddTask_WithInvalidPercComplete_ShouldFailValidation()	//Test validation for PercComplete propertie in ToDoTask
 		{
 			var task = new ToDoTask { Title = "Test", PercComplete=120};
 
