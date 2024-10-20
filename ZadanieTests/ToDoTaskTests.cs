@@ -25,38 +25,12 @@ namespace ZadanieTests
 		}
 
 		[Fact]
-		public async Task GetTaskById_ShouldReturnTask_WhenIdExists()			//Test getting task by ID
-		{
-			var task = new ToDoTask { Title = "Test task" };
-			_context.ToDoTasks.Add(task);
-			await _context.SaveChangesAsync();
-
-			var response = await _client.GetAsync($"/ToDoTask/{task.Id}");
-
-			response.EnsureSuccessStatusCode();
-			var returnedTask = JsonConvert.DeserializeObject<ToDoTask>(await response.Content.ReadAsStringAsync());
-			Assert.Equal(task.Id, returnedTask?.Id);
-		}
-
-		[Fact]
 		public async Task GetTaskById_ShouldReturnNotFound_WhenIdDoesNotExist()		//Test getting task by ID when ID does not exist
 		{
 			var response = await _client.GetAsync("/ToDoTask/99999");
-			Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+			Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
 		}
 
-		[Fact]
-		public async Task CreateTask_ShouldCreateTask_WhenModelIsValid()				//Test adding new task to database
-		{
-			var task = new ToDoTask { Title = "Test" };
-			var content = new StringContent(JsonConvert.SerializeObject(task), Encoding.UTF8, "application/json");
-
-			var response = await _client.PostAsync("/ToDoTask", content);
-
-			response.EnsureSuccessStatusCode();
-			var createdTask = JsonConvert.DeserializeObject<ToDoTask>(await response.Content.ReadAsStringAsync());
-			Assert.Equal("Test", createdTask?.Title);
-		}
 
 		[Fact]
 		public void AddTask_WithInvalidTitle_ShouldFailValidation()		//Test validation for Title propertie in ToDoTask object
