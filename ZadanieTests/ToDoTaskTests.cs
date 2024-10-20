@@ -25,7 +25,7 @@ namespace ZadanieTests
 		}
 
 		[Fact]
-		public async Task GetTaskById_ShouldReturnTask_WhenIdExists()
+		public async Task GetTaskById_ShouldReturnTask_WhenIdExists()			//Test getting task by ID
 		{
 			var task = new ToDoTask { Title = "Test task" };
 			_context.ToDoTasks.Add(task);
@@ -39,7 +39,7 @@ namespace ZadanieTests
 		}
 
 		[Fact]
-		public async Task GetTaskById_ShouldReturnNotFound_WhenIdDoesNotExist()
+		public async Task GetTaskById_ShouldReturnNotFound_WhenIdDoesNotExist()		//Test getting task by ID when ID does not exist
 		{
 			var response = await _client.GetAsync("/ToDoTask/99999");
 			Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
