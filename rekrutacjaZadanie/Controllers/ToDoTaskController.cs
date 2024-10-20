@@ -48,8 +48,12 @@ namespace rekrutacjaZadanie.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<ToDoTask>> CreateTask(ToDoTask task)
+		public async Task<ActionResult<ToDoTask>> CreateTask([FromBody]ToDoTask task)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 			_context.ToDoTasks.Add(task);
 			await _context.SaveChangesAsync();
 			return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
@@ -61,6 +65,11 @@ namespace rekrutacjaZadanie.Controllers
 			if (id != task.Id)
 			{
 				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
 			}
 
 			_context.Entry(task).State = EntityState.Modified;
@@ -75,6 +84,11 @@ namespace rekrutacjaZadanie.Controllers
 			if (task == null)
 			{
 				return NotFound();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
 			}
 
 			task.PercComplete = perc;
